@@ -1,0 +1,28 @@
+---
+- name: MongoDB | Import public key
+  apt_key: keyserver=hkp://keyserver.ubuntu.com:80 id=7F0CEB10 state=present
+
+- name: MongoDB | Add repository
+  shell: echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
+
+- name: update
+  shell: sudo apt-get update
+
+- name: MongoDB | Install MongoDB
+  apt:
+    name: mongodb-org
+
+- template:
+    src: roles/mongodb/files/mongodb.service
+    dest: /etc/systemd/system/mongodb.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Update the systemd service
+  shell: sudo systemctl daemon-reload
+- name: Start the service
+  shell: sudo systemctl start mongodb
+
+
+

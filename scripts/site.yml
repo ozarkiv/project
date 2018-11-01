@@ -1,0 +1,12 @@
+---
+- name: Install
+  user: ubuntu
+  become: yes
+  hosts: all
+  become_user: root
+  become_method: sudo
+
+  roles:
+   - mongodb 
+   - nodejs
+

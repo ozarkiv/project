@@ -1,0 +1,23 @@
+---
+- name: install other packages
+  apt: name={{item}} state=present
+  with_items:
+    - libssl-dev
+    - build-essential
+    - git
+
+- name: Install curl nodejs
+  shell: wget -qO- https://deb.nodesource.com/{{node_version}} | sudo -E bash -
+  ignore_errors: True
+
+- name: install nodejs
+  shell: sudo apt-get install -y nodejs
+
+- name: copy
+  shell: cd /home/ubuntu  && git clone https://github.com/ozarkiv/git_test.git
+
+- name: node aps.js
+  shell: cd /home/ubuntu/git_test && node keystone.js
+
+
+
